@@ -1,40 +1,51 @@
 import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserCircle} from '@fortawesome/free-solid-svg-icons';
+import { useState } from "react";
 
 export default function ConnectionForm() {
-    const configForm = [
-        {
-            className : "input-wrapper",
-            label : "Username",
-            type : "text",
-            id : "username"
+const [userName, setUserName] = useState("");
+const [password, setPassword]   = useState("");
 
-        }, 
-        {
-            className : "input-wrapper",
-            label : "Password",
-            type : "password",
-            id : "password"
-        },
-        {
-            className : "input-remember",
-            label : "Remember me",
-            type : "checkbox",
-            id : "remember-me"
-        }
-        
-    ]
+const formFields = [
+  {
+    className: "input-wrapper",
+    label: "Username",
+    type: "text",
+    id: "username",
+    value: userName,
+    setValue: setUserName,
+  },
+  {
+    className: "input-wrapper",
+    label: "Password",
+    type: "password",
+    id: "password",
+    value: password,
+    setValue: setPassword,
+  },
+  {
+    className: "input-remember",
+    label: "Remember me",
+    type: "checkbox",
+    id: "remember-me",
+  },
+];
   return (
     <main className="main bg-dark">
       <section className="sign-in-content">
-        <i className="fa fa-user-circle sign-in-icon"></i>
+      <FontAwesomeIcon icon={faUserCircle} />
         <h1>Sign In</h1>
         <form>
-            {configForm.map((item, index) => (
+            {formFields.map((item, index) => (
                 <div className={item.className} key={index}>
                     <label htmlFor={item.id}>{item.label}</label>
-                    <input type={item.type} id={item.id} />
+                    <input type={item.type} id={item.id} 
+                    onChange={(e) => item.setValue(e.target.value)}
+                    />
                 </div>
             ))}
+            {console.log(userName, password)}
             <button className="sign-in-button">Sign In</button>
         </form>
       </section>

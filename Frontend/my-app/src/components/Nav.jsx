@@ -13,9 +13,9 @@ const Nav = ({ isAuthenticated }) => (
     <div>
       <FontAwesomeIcon icon={faUserCircle} />
       {isAuthenticated ? (
-        <><Link to="/Logout" className="main-nav-item"> Tony </Link>
+        <><Link to="/" className="main-nav-item"> Tony </Link>
         <FontAwesomeIcon icon={faArrowRightFromBracket} />
-          <Link to="/Logout" className="main-nav-item"> Sign Out </Link></>
+          <Link to="/" className="main-nav-item"> Sign Out </Link></>
       ) : (
         <Link to="/Login" className="main-nav-item"> Sign In </Link>
       )}
