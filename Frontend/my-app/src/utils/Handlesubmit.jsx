@@ -1,8 +1,10 @@
 import  { loginUser } from './LoginUser';
-
-export const handleSubmit = async (email, password, setError) => {
+export const HandleSubmit = async (email, password, setError, navigate ) => {
   try {
     const data = await loginUser(email, password);
+    console.log("You are logged in");
+    navigate("/User");
+
   } catch (error) {
     setError(error.message);
   }

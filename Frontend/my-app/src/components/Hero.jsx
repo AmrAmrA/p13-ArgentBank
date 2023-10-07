@@ -34,9 +34,11 @@ export default function Hero() {
       <section className="hero-content">
         {heroContentData.map((item, index) => {
           const Element = item.type;
-          return <Element key={index} className={item.className}> {item.content} </Element>;
+          return (
+            <Element key={index} className={item.className}>{item.content}</Element>
+          );
         })}
       </section>
     </div>
   );
-};
+}
