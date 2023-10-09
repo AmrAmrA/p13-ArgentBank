@@ -13,12 +13,14 @@ export async function loginUser(userName, password) {
 
     const data = await response.json();
     if (response.ok) {
+      if (data.body.token) {
+        localStorage.setItem('authToken', data.body.token);
+      }
       return data;
-    } else {
-      throw new Error(data.message || "Erreur lors de la connexion");
     }
+    throw new Error(data.message || "Erreur lors de la connexion");
   } catch (error) {
     console.error("Erreur lors de la requête:", error);
-    throw error;
+    throw error
   }
 }
