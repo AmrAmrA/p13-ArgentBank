@@ -1,3 +1,4 @@
+import React from "react";
 import IconChat from "../assets/icon-chat.png";
 import IconMoney from "../assets/icon-money.png";
 import IconSecurity from "../assets/icon-security.png";
