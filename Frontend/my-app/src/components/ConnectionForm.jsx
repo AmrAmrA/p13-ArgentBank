@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, setEmail, setPassword, setError } from '../features/auth/authSlice';
 import ConnectionFields from './ConnectionFields';
@@ -9,7 +9,16 @@ import { useNavigate } from 'react-router-dom';
 export default function ConnectionForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { email, password, error } = useSelector((state) => state.auth);
+  // Ajout de user dans le sélecteur pour vérifier si l'utilisateur est connecté
+  const { email, password, error, user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    // Si l'utilisateur est connecté (c'est-à-dire si user n'est pas null), redirigez-le vers '/user'
+    if (user) {
+      navigate('/user');
+    }
+    // Ajoutez également une dépendance à error pour réagir aux erreurs de connexion
+  }, [user, error, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
