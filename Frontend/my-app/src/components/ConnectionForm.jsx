@@ -9,15 +9,12 @@ import { useNavigate } from 'react-router-dom';
 export default function ConnectionForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // Ajout de user dans le sélecteur pour vérifier si l'utilisateur est connecté
   const { email, password, error, user } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    // Si l'utilisateur est connecté (c'est-à-dire si user n'est pas null), redirigez-le vers '/user'
     if (user) {
       navigate('/user');
     }
-    // Ajoutez également une dépendance à error pour réagir aux erreurs de connexion
   }, [user, error, navigate]);
 
   const handleSubmit = (e) => {
