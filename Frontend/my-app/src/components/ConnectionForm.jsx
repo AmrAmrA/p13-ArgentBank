@@ -1,34 +1,34 @@
-import React from "react";
-import { HandleSubmit } from "../utils/Handlesubmit";
-import ConnectionFields from "./ConnectionFields";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser, setEmail, setPassword, setError } from '../features/auth/authSlice';
+import ConnectionFields from './ConnectionFields';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 export default function ConnectionForm() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
+  const { email, password, error } = useSelector((state) => state.auth);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(loginUser({ email, password, navigate }));
+  };
+
   return (
     <main className="main bg-dark">
       <section className="sign-in-content">
         <FontAwesomeIcon icon={faUserCircle} />
         <h1>Sign In</h1>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            HandleSubmit(email, password, setError, navigate);
-          }}
-        >
+        <form onSubmit={handleSubmit}>
           <ConnectionFields
             email={email}
-            setEmail={setEmail}
+            onEmailChange={(e) => dispatch(setEmail(e.target.value))}
             password={password}
-            setPassword={setPassword}
+            onPasswordChange={(e) => dispatch(setPassword(e.target.value))}
             error={error}
-            setError={setError}
+            onErrorSet={(error) => dispatch(setError(error))}
           />
           <button className="sign-in-button" type="submit">
             Sign In

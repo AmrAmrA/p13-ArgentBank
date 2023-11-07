@@ -1,19 +1,19 @@
-import React from "react";
+import React from 'react';
 
 export default function ConnectionFields({
   email,
-  setEmail,
+  onEmailChange,
   password,
-  setPassword,
+  onPasswordChange,
 }) {
   const formFields = [
     {
       className: "input-wrapper",
-      label: "email",
+      label: "Email",
       type: "email",
       id: "email",
       value: email,
-      setValue: setEmail,
+      onChange: onEmailChange,
     },
     {
       className: "input-wrapper",
@@ -21,7 +21,7 @@ export default function ConnectionFields({
       type: "password",
       id: "password",
       value: password,
-      setValue: setPassword,
+      onChange: onPasswordChange,
     },
     {
       className: "input-remember",
@@ -38,9 +38,8 @@ export default function ConnectionFields({
         type={item.type}
         id={item.id}
         value={item.value}
-        onChange={
-          item.setValue ? (e) => item.setValue(e.target.value) : undefined
-        }
+        onChange={item.onChange}
+        {...(item.type === 'checkbox' ? { checked: item.value } : {})}
       />
     </div>
   ));
