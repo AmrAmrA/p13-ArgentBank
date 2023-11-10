@@ -13,7 +13,7 @@ const Nav = () => {
   const handleSignOut = () => {
     dispatch(logout());
   };
-
+  const user = useSelector((state) => state.auth.user);
   return (
     <nav className="main-nav">
     <Link to="/" className="main-nav-logo">
@@ -24,7 +24,7 @@ const Nav = () => {
         <FontAwesomeIcon icon={faUserCircle} />
         {isAuthenticated ? (
           <>
-            <Link to="/user" className="main-nav-item"> Tony </Link>
+            <Link to="/user" className="main-nav-item">   {user.body.firstName} </Link>
             <FontAwesomeIcon icon={faArrowRightFromBracket} />
             <Link to="/" onClick={handleSignOut} className="main-nav-item"> Sign Out </Link>
           </>
