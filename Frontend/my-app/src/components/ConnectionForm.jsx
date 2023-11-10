@@ -20,11 +20,8 @@ export default function ConnectionForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(loginUser({ email, password, navigate }))
-    .then(({ payload }) => {
-      if (payload && payload.body.token) {
-        dispatch(fetchUserProfile(payload.body.token));
-      }
-    });    
+    .then(({ payload }) => dispatch(fetchUserProfile(payload.body.token)));
+  };
 
   return (
     <main className="main bg-dark">
