@@ -13,6 +13,7 @@ export const loginUser = createAsyncThunk(
       });
       const data = await response.json();
       if (response.ok) {
+        console.log(data.body.token);
         return data; 
       } else {
         return rejectWithValue(data.message); 
@@ -30,6 +31,7 @@ const authSlice = createSlice({
     password: '',
     user: null,
     error: null,
+    token : null, 
   },
   reducers: {
     logout: (state) => {
@@ -45,6 +47,9 @@ const authSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload;
     },
+    setToken : (state, action) => {
+      state.token = action.payload; 
+    }, 
     setError: (state, action) => {
       state.error = action.payload;
     },
@@ -52,6 +57,7 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.fulfilled, (state, action) => {
+        state.token = action.payload.token; 
         state.user = action.payload;
         state.error = null;
       })
@@ -61,6 +67,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { setEmail, setPassword, setUser, setError, logout } = authSlice.actions;
+export const { setEmail, setPassword, setUser, setError, logout, setToken } = authSlice.actions;
 
 export default authSlice.reducer;
