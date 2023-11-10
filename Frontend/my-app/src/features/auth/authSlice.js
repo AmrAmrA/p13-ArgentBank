@@ -13,7 +13,6 @@ export const loginUser = createAsyncThunk(
       });
       const data = await response.json();
       if (response.ok) {
-        console.log(data.body.token);
         return data; 
       } else {
         return rejectWithValue(data.message); 
@@ -57,7 +56,7 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.token = action.payload.token; 
+        state.token = action.payload.body.token; 
         state.user = action.payload;
         state.error = null;
       })
