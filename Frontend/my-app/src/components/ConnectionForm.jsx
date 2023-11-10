@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser, setEmail, setPassword, setError} from '../features/auth/authSlice';
+import { loginUser,fetchUserProfile ,setEmail, setPassword, setError} from '../features/auth/authSlice';
 import ConnectionFields from './ConnectionFields';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
@@ -19,8 +19,12 @@ export default function ConnectionForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(loginUser({ email, password, navigate }));
-  };
+    dispatch(loginUser({ email, password, navigate }))
+    .then(({ payload }) => {
+      if (payload && payload.body.token) {
+        dispatch(fetchUserProfile(payload.body.token));
+      }
+    });    
 
   return (
     <main className="main bg-dark">

@@ -13,6 +13,7 @@ export const loginUser = createAsyncThunk(
       });
       const data = await response.json();
       if (response.ok) {
+        console.log(response);
         return data; 
       } else {
         return rejectWithValue(data.message); 
@@ -22,6 +23,29 @@ export const loginUser = createAsyncThunk(
     }
   }
 );
+
+export const fetchUserProfile = createAsyncThunk(
+  'auth/fetchUserProfile',
+  async (token, { rejectWithValue }) => {
+    try {
+      const response = await fetch('http://localhost:3001/api/v1/user/profile', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        return rejectWithValue(data.message);
+      }
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 
 const authSlice = createSlice({
   name: 'auth',
@@ -62,7 +86,13 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.error = action.payload;
-      });
+      })
+      .addCase(fetchUserProfile.fulfilled, (state, action) => {
+        state.user = action.payload;
+      })
+      .addCase(fetchUserProfile.rejected, (state, action) => {
+        state.error = action.payload; 
+      })
   },
 });
 
