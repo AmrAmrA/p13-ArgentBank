@@ -10,7 +10,7 @@ export default function UserHeader() {
   const dispatch = useDispatch();
 
   const handleEditClick = () => {
-    setIsEditing(true);
+    setIsEditing(true); 
     setEditedFirstName(user.body.firstName);
     setEditedLastName(user.body.lastName);
   };
@@ -27,37 +27,41 @@ export default function UserHeader() {
   
   const handleCancel = () => {
     setIsEditing(false);
+    setEditedFirstName(user.body.firstName);
+    setEditedLastName(user.body.lastName);
   };
 
   return (
     <header className="header">
-      <h1>
-        Welcome back
-        <br />
-        {isEditing ? (
-          <>
-            <input
-              type="text"
-              value={editedFirstName}
-              onChange={(e) => setEditedFirstName(e.target.value)}
-              placeholder="First Name"
-            />
-            <input
-              type="text"
-              value={editedLastName}
-              onChange={(e) => setEditedLastName(e.target.value)}
-              placeholder="Last Name"
-            />
-            <button onClick={handleSave}>Save</button>
-            <button onClick={handleCancel}>Cancel</button>
-          </>
-        ) : (
+      <h1>Welcome back<br />
+        {!isEditing && (
           <>
             {user.body.firstName} {user.body.lastName}
           </>
         )}
       </h1>
-        <button onClick={handleEditClick} className="edit-button">Edit Name</button>
+      {isEditing ? (
+        <div>
+          <input
+            type="text"
+            value={editedFirstName}
+            onChange={(e) => setEditedFirstName(e.target.value)}
+            placeholder="First Name"
+          />
+          <input
+            type="text"
+            value={editedLastName}
+            onChange={(e) => setEditedLastName(e.target.value)}
+            placeholder="Last Name"
+          />
+          <button onClick={handleSave}>Save</button>
+          <button onClick={handleCancel}>Cancel</button>
+        </div>
+      ) : (
+        <div>
+          <button onClick={handleEditClick} className="edit-button">Edit Name</button>
+        </div>
+      )}
     </header>
   );
 }
