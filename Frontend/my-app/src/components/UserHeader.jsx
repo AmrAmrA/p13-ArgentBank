@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { updateUserProfile } from '../features/auth/authSlice';
 
 export default function UserHeader() {
   const [isEditing, setIsEditing] = useState(false);
@@ -16,10 +17,14 @@ export default function UserHeader() {
 
   const handleSave = () => {
     if (editedFirstName !== user.body.firstName || editedLastName !== user.body.lastName) {
+      dispatch(updateUserProfile({
+        firstName: editedFirstName,
+        lastName: editedLastName
+      }));
     }
     setIsEditing(false);
   };
-
+  
   const handleCancel = () => {
     setIsEditing(false);
   };
