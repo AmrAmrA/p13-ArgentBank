@@ -110,6 +110,36 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+  /user/transactions : 
+    put:
+     security:
+      - Bearer : []
+     tags : 
+       - User Transactions
+     summary : User Transactions
+     decription : API for modyfying or deleting transactions notes
+     parameters : 
+        - in : header
+          name : Authorization 
+          description : Attach Bearer JWT token
+          required : true
+        - in : body 
+          name : body 
+          description : Update user transactions 
+          required : true
+          schema : 
+               $ref : '#/definitions/UserTransactions'
+          produces : 
+            -application/json 
+          responses : 
+          '200' : 
+            description : User transaction updated successfully 
+            schema : 
+            $ref : '#/definitions/ApiResponse'
+          '400': 
+            descreiption : Invalid Fields
+          '500': 
+            description : Internal Server Error 
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -163,4 +193,3 @@ definitions:
       firstName:
         type: string
       lastName:
-        type: string
