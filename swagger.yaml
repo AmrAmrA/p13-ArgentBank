@@ -67,6 +67,7 @@ paths:
       description: API for fetching a user profile
       parameters:
         - in: header
+          type : string
           name: Authorization
           description: Attach Bearer JWT token
           required: true
@@ -90,6 +91,7 @@ paths:
       description: API for updating a user profile
       parameters:
         - in: header
+          type : string
           name: Authorization
           description: Attach Bearer JWT token
           required: true
@@ -117,15 +119,11 @@ paths:
      tags : 
        - User Transactions
      summary : User Transactions
-     decription : API for modyfying or deleting transactions notes
      parameters : 
-        - in : header
+        - in : body
+          type : string
           name : Authorization 
           description : Attach Bearer JWT token
-          required : true
-        - in : body 
-          name : body 
-          description : Update user transactions 
           required : true
           schema : 
                $ref : '#/definitions/UserTransactions'
@@ -193,3 +191,11 @@ definitions:
       firstName:
         type: string
       lastName:
+        type: string
+  UserTransactions:
+    type: object
+    properties:
+      Token:
+        type: string
+      Amount: 
+        type : number
