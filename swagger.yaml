@@ -7,7 +7,7 @@ info:
 host: localhost:3001
 basePath: /api/v1
 schemes:
-  - http
+  - https
 paths:
   /user/login:
     post:
@@ -112,7 +112,7 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
-  /user/transactions : 
+  /user/transactions/{notes} : 
     put:
      security:
       - Bearer : []
@@ -120,9 +120,38 @@ paths:
        - User Transactions
      summary : User Transactions
      parameters : 
-        - in : body
+        - in : path
+          name : notes
           type : string
-          name : Authorization 
+          description : Attach Bearer JWT token
+          required : true
+        - in: body
+          name: body
+          description: Update Transactions notes
+          required: true
+          schema:
+            $ref: '#/definitions/UserTransactions'
+          produces:
+            - application/json
+          responses:
+          '200':
+            description: Transactions note updated successfully 
+            schema:
+            $ref: '#/definitions/UserTransactions'
+          '400':
+            description: Invalid Fields
+          '500':
+            description: Internal Server Error
+    delete:
+     security:
+      - Bearer : []
+     tags : 
+       - User Transactions
+     summary : User Transactions
+     parameters : 
+        - in : path
+          name : notes
+          type : string
           description : Attach Bearer JWT token
           required : true
           schema : 
@@ -130,12 +159,34 @@ paths:
           produces : 
             -application/json 
           responses : 
-          '200' : 
-            description : User transaction updated successfully 
-            schema : 
-            $ref : '#/definitions/ApiResponse'
+          '200': 
+            description: User transaction Deleted successfully
           '400': 
-            descreiption : Invalid Fields
+            description : Invalid Field
+          '500': 
+            description : Internal Server Error 
+    /user/transactions/category : 
+     put:
+     security:
+      - Bearer : []
+     tags : 
+       - User Transactions
+     summary : User Transactions 
+     parameters : 
+        - in : path
+          name : notes
+          type : string
+          description : Attach Bearer JWT token
+          required : true
+          schema : 
+               $ref : '#/definitions/TransactionsCategory'
+          produces : 
+            -application/json 
+          responses : 
+          '200': 
+            description: Transaction Category updated successfully
+          '400': 
+            description : Invalid Fields
           '500': 
             description : Internal Server Error 
 securityDefinitions:
@@ -197,5 +248,12 @@ definitions:
     properties:
       Token:
         type: string
-      Amount: 
-        type : number
+      NotesText: 
+        type : string
+  TransactionsCategory : 
+    type : object
+    properties : 
+       Token : 
+         type : string
+       NotesCategory : 
+         type : string
