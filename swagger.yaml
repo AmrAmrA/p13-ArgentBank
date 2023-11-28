@@ -57,6 +57,7 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+
   /user/profile:
     post:
       security:
@@ -112,65 +113,8 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
-  /user/transactions/{notes}:
-    put:
-      security:
-        - Bearer: []
-      tags:
-        - Transactions Module
-      summary: User Transactions Update
-      description: API for updating user Transactions
-      parameters:
-        - in: path
-          name: notes
-          type: string
-          description: Attach Bearer JWT token
-          required: true
-        - in: body
-          name: body
-          description: Update Transactions notes
-          required: true
-          schema:
-            $ref: '#/definitions/UserTransactions'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: Transactions note updated successfully
-          schema:
-            $ref: '#/definitions/UserTransactions'
-        '400':
-          description: Invalid Fields
-        '500':
-          description: Internal Server Error
-  /user/transactions/category:
-    put:
-      security:
-        - Bearer: []
-      tags:
-        - Transactions Module
-      summary: User Transactions Category
-      description: API for updating Transactions Category
-      parameters:
-        - in: body
-          name: body
-          description: Update Transactions Category
-          required: true
-          schema:
-            $ref: '#/definitions/TransactionsCategory'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: Transaction Category updated successfully
-          schema:
-            $ref: '#/definitions/TransactionsCategory'
-        '400':
-          description: Invalid Fields
-        '500':
-          description: Internal Server Error
   /user/transactions/months:
-    get:
+     get:
       security:
         - Bearer: []
       tags:
@@ -188,7 +132,7 @@ paths:
           description: Display Transactions of every month
           required: true
           schema:
-            $ref: '#/definitions/MonthsTransactions'
+            $ref: '#/definitions/MonthRequest'
       produces:
         - application/json
       responses:
@@ -198,6 +142,12 @@ paths:
             $ref: '#/definitions/MonthsTransactions'
         '400':
           description: Invalid Fields
+        '401':
+          description: Unauthorized Access
+        '402':
+          description: Payment Required
+        '405':
+          description: Method Not Allowed
         '500':
           description: Internal Server Error
   /user/transactions/details:
@@ -229,13 +179,90 @@ paths:
             $ref: '#/definitions/TransactionsDetails'
         '400':
           description: Invalid Fields
+        '401':
+          description: Unauthorized Access
+        '402':
+          description: Payment Required
+        '405':
+          description: Method Not Allowed
         '500':
           description: Internal Server Error
+  /user/transactions/{transactionId}:
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: User Transactions Update
+      description: API for updating user Transactions
+      parameters:
+        - in: path
+          name: notes
+          type: string
+          description: Attach Bearer JWT token
+          required: true
+        - in: body
+          name: body
+          description: Update Transactions notes
+          required: true
+          schema:
+            $ref: '#/definitions/UserTransactions'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transactions note updated successfully
+          schema:
+            $ref: '#/definitions/TransactionRequest'
+        '400':
+          description: Invalid Fields
+        '401':
+          description: Unauthorized Access
+        '402':
+          description: Payment Required
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+  /user/transactions/{transactionId}:
+    patch:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions Module
+      summary: User Transactions Category
+      description: API for updating Transactions Category
+      parameters:
+        - in: body
+          name: body
+          description: Update Transactions Category
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionsCategory'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction Category updated successfully
+          schema:
+            $ref: '#/definitions/TransactionRequest'
+        '400':
+          description: Invalid Fields
+        '401':
+          description: Unauthorized Access
+        '402':
+          description: Payment Required
+        '405':
+          description: Method Not Allowed
+        '500':
+          description: Internal Server Error
+
 securityDefinitions:
   Bearer:
     type: apiKey
     name: Authorization
     in: header
+
 definitions:
   User:
     type: object
@@ -326,6 +353,11 @@ definitions:
     type : object 
     properties : 
       transactionId:
+        type: string
+  MonthRequest :
+    type : object 
+    properties : 
+      currentMonth:
         type: string
   TransactionsDetails:
     type: object
