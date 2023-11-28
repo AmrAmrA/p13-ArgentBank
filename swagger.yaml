@@ -112,12 +112,12 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
-  /user/transactions/notes:
+  /user/transactions/{notes}:
     put:
       security:
         - Bearer: []
       tags:
-        - User Transactions
+        - Transactions Module
       summary: User Transactions Update
       description: API for updating user Transactions
       parameters:
@@ -148,7 +148,7 @@ paths:
       security:
         - Bearer: []
       tags:
-        - User Transactions
+        - Transactions Module
       summary: User Transactions Category
       description: API for updating Transactions Category
       parameters:
@@ -174,10 +174,15 @@ paths:
       security:
         - Bearer: []
       tags:
-        - User Transactions
+        - Transactions Module
       summary: Every Month Transaction
       description: API for displaying every month transaction
       parameters:
+        - in: header
+          type: string
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
         - in: body
           name: body
           description: Display Transactions of every month
@@ -200,16 +205,21 @@ paths:
       security:
         - Bearer: []
       tags:
-        - User Transactions
+        - Transactions Module
       summary: Transactions details
       description: API for displaying Transactions Details
       parameters:
+        - in: header
+          type: string
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
         - in: body
           name: body
           description: Display a chosen transaction details
           required: true
           schema:
-            $ref: '#/definitions/TransactionsDetails'
+            $ref: '#/definitions/TransactionRequest'
       produces:
         - application/json
       responses:
@@ -294,19 +304,29 @@ definitions:
   MonthsTransactions:
     type: object
     properties:
-      Token:
-        type: string
-      MonthsAmounts:
+      CurrentMonth:
         type: array
         items:
           type: object
           properties:
-            dayOfMonth:
+            date:
               type: integer
               format: int32
+            description : 
+              type : string
             amount:
               type: number
               format: float
+            balance:
+              type: number
+              format: float 
+            accountNumber : 
+              type : number
+  TransactionRequest :
+    type : object 
+    properties : 
+      transactionId:
+        type: string
   TransactionsDetails:
     type: object
     properties:
@@ -315,8 +335,6 @@ definitions:
         items:
           type: object
           properties:
-            transactionId:
-              type: string
             date:
               type: string
             description:
@@ -328,6 +346,8 @@ definitions:
               type: number
               format: float 
             category:
+              type: string
+            transactionId:
               type: string
             notes:
               type: string
