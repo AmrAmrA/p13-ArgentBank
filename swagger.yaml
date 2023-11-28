@@ -119,6 +119,7 @@ paths:
       tags:
         - User Transactions
       summary: User Transactions Update
+      description: User Transactions Update
       parameters:
         - in: path
           name: notes
@@ -253,6 +254,7 @@ securityDefinitions:
     in: header
 definitions:
   User:
+    type: object
     properties:
       email:
         type: string
@@ -267,9 +269,10 @@ definitions:
         type: string
         description: user last name
   Login:
+    type: object
     properties:
       email:
-        type : string
+        type: string
         description: user email
       password:
         type: string
@@ -303,23 +306,23 @@ definitions:
   UserTransactions:
     type: object
     properties:
+      transactionId:
+        type: string
+      notes: 
+        type: string
+  TransactionsCategory:
+    type: object
+    properties:
+      transactionId:
+        type: string
+      category:
+        type: string
+  MonthsTransactions:
+    type: object
+    properties:
       Token:
         type: string
-      NotesText: 
-        type : string
-  TransactionsCategory : 
-    type : object
-    properties : 
-       Token : 
-         type : string
-       NotesCategory : 
-         type : string
-  MonthsTransactions: 
-    type: object
-    properties: 
-      Token: 
-        type: string
-      MonthsAmounts: 
+      MonthsAmounts:
         type: array
         items:
           type: object
@@ -330,25 +333,27 @@ definitions:
             amount:
               type: number
               format: float
-  TransactionsDetails: 
+  TransactionsDetails:
     type: object
-    properties: 
-      Token: 
-        type: string
-      MonthsAmounts: 
+    properties:
+      transactions:
         type: array
         items:
           type: object
           properties:
-            dayOfMonth:
-              type: integer
-              format: int32
-            descriptionNote:
+            transactionId:
               type: string
-              format: string
+            date:
+              type: string
+            description:
+              type: string
             amount:
               type: number
               format: float
             balance:
               type: number
-              format: float
+              format: float 
+            category:
+              type: string
+            notes:
+              type: string
