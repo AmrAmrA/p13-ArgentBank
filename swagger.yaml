@@ -112,14 +112,14 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
-  /user/transactions/{notes}:
+  /user/transactions/notes:
     put:
       security:
         - Bearer: []
       tags:
         - User Transactions
       summary: User Transactions Update
-      description: User Transactions Update
+      description: API for updating user Transactions
       parameters:
         - in: path
           name: notes
@@ -143,42 +143,14 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
-    delete:
-      security:
-        - Bearer: []
-      tags:
-        - User Transactions
-      summary: User Transactions Delete
-      parameters:
-        - in: path
-          name: notes
-          type: string
-          description: Attach Bearer JWT token
-          required: true
-        - in: body
-          name: body
-          description: Delete Transactions notes
-          required: true
-          schema:
-            $ref: '#/definitions/UserTransactions'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: Transactions note deleted successfully
-          schema:
-            $ref: '#/definitions/UserTransactions'
-        '400':
-          description: Invalid Fields
-        '500':
-          description: Internal Server Error
   /user/transactions/category:
     put:
       security:
         - Bearer: []
       tags:
         - User Transactions
-      summary: User Transactions Category Update
+      summary: User Transactions Category
+      description: API for updating Transactions Category
       parameters:
         - in: body
           name: body
@@ -203,7 +175,8 @@ paths:
         - Bearer: []
       tags:
         - User Transactions
-      summary: Display Transactions of every month
+      summary: Every Month Transaction
+      description: API for displaying every month transaction
       parameters:
         - in: body
           name: body
@@ -228,7 +201,8 @@ paths:
         - Bearer: []
       tags:
         - User Transactions
-      summary: Display a chosen transaction details
+      summary: Transactions details
+      description: API for displaying Transactions Details
       parameters:
         - in: body
           name: body
